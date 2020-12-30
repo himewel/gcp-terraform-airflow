@@ -48,3 +48,33 @@ variable "project_zone" {
   type = string
   description = "Default zone to create the instances"
 }
+
+variable "flower" {
+    type = object({
+      username = string
+      password = string
+    })
+    default = {
+      username = "admin"
+      password = "admin"
+    }
+}
+
+variable "webserver" {
+    type = object({
+      firstname = string
+      lastname = string
+      username = string
+      password = string
+      email = string
+      role = string
+    })
+    default = {
+      username = "admin"
+      password = "admin"
+      firstname = "Welbert"
+      lastname = "Castro"
+      email = "welberthime@hotmail.com"
+      role = "Admin"
+    }
+}

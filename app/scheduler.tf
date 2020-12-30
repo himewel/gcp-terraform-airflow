@@ -44,12 +44,12 @@ resource "google_compute_instance" "scheduler_instance" {
 
       sudo docker exec -d $docker_id \
         airflow users create \
-          --role Admin \
-          --username admin \
-          --password admin \
-          --firstname Welbert \
-          --lastname Castro \
-          --email welberthime@hotmail.com
+          --role ${var.webserver.role} \
+          --username ${var.webserver.username} \
+          --password ${var.webserver.password} \
+          --firstname ${var.webserver.firstname} \
+          --lastname ${var.webserver.lastname} \
+          --email ${var.webserver.email}
       EOF
   }
 

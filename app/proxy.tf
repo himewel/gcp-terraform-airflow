@@ -8,14 +8,15 @@ resource "google_compute_instance" "proxy_instance" {
   metadata = {
     startup-script = <<-EOF
       #!/bin/bash
+
       sudo apt-get update -qqq
       sudo apt-get install curl nginx -qqq
       curl https://raw.githubusercontent.com/himewel/airflow_celery_workers/main/proxy -o proxy
 
       server_name=$(curl -s http://whatismyip.akamai.com/)
       sed -i "s/SERVER-NAME/$server_name/g" proxy
-      sed -i "s/http://127.0.0.1:8080/frontend-instance:8080/g" proxy
-      sed -i "s/http://127.0.0.1:5555/frontend-instance:5555/g" proxy
+      sed -i "s/http://127.0.0.1:8080/${google_compute_instance.frontend_instance.network_interface[0].network_ip}:8080/g" proxy
+      sed -i "s/http://127.0.0.1:5555/${google_compute_instance.frontend_instance.network_interface[0].network_ip}:5555/g" proxy
 
       rm /etc/nginx/sites-enabled/default
       /bin/cp -rf proxy /etc/nginx/sites-available/proxy
