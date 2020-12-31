@@ -1,14 +1,13 @@
 resource "google_compute_network" "vpc_network" {
-    name = "terraform-network"
-    auto_create_subnetworks = "true"
+  name = var.vpc_network_name
 }
 
 resource "google_compute_firewall" "ssh" {
-  name    = "allow-ssh"
-  network = google_compute_network.vpc_network.name
+  name          = "allow-ssh"
+  network       = google_compute_network.vpc_network.name
   source_ranges = ["0.0.0.0/0"]
-  direction = "INGRESS"
-  priority = "65534"
+  direction     = "INGRESS"
+  priority      = "65534"
 
   allow {
     protocol = "icmp"
@@ -21,12 +20,12 @@ resource "google_compute_firewall" "ssh" {
 }
 
 resource "google_compute_firewall" "http" {
-  name    = "allow-http"
-  network = google_compute_network.vpc_network.name
+  name          = "allow-http"
+  network       = google_compute_network.vpc_network.name
   source_ranges = ["0.0.0.0/0"]
-  target_tags = ["http-server"]
-  direction = "INGRESS"
-  priority = "1000"
+  target_tags   = ["http-server"]
+  direction     = "INGRESS"
+  priority      = "1000"
 
   allow {
     protocol = "tcp"
@@ -35,11 +34,11 @@ resource "google_compute_firewall" "http" {
 }
 
 resource "google_compute_firewall" "internal" {
-  name    = "allow-internal"
-  network = google_compute_network.vpc_network.name
-  source_ranges = ["10.128.0.0/20", "10.142.0.0/20", "10.150.0.0/20", "10.138.0.0/20"]
-  direction = "INGRESS"
-  priority = "65534"
+  name          = "allow-internal"
+  network       = google_compute_network.vpc_network.name
+  source_ranges = var.internal_firewall_ip_ranges
+  direction     = "INGRESS"
+  priority      = "65534"
 
   allow {
     protocol = "icmp"

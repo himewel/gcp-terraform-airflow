@@ -1,9 +1,8 @@
 resource "google_compute_instance" "proxy_instance" {
-  name         = "proxy-instance"
-  machine_type = var.machine.micro
-  tags         = ["http-server"]
+  name                      = "proxy-instance"
+  machine_type              = var.machine.micro
+  tags                      = ["http-server"]
   allow_stopping_for_update = true
-  depends_on = [time_sleep.frontend_instance_sleep]
 
   metadata = {
     startup-script = <<-EOF
@@ -15,8 +14,8 @@ resource "google_compute_instance" "proxy_instance" {
 
       server_name=$(curl -s http://whatismyip.akamai.com/)
       sed -i "s/SERVER-NAME/$server_name/g" proxy
-      sed -i "s/http://127.0.0.1:8080/${google_compute_instance.frontend_instance.network_interface[0].network_ip}:8080/g" proxy
-      sed -i "s/http://127.0.0.1:5555/${google_compute_instance.frontend_instance.network_interface[0].network_ip}:5555/g" proxy
+      sed -i "s|127.0.0.1:8080|${var.frontend_instance_address}:8080|g" proxy
+      sed -i "s|127.0.0.1:5555|${var.frontend_instance_address}:5555|g" proxy
 
       rm /etc/nginx/sites-enabled/default
       /bin/cp -rf proxy /etc/nginx/sites-available/proxy
@@ -26,13 +25,13 @@ resource "google_compute_instance" "proxy_instance" {
   }
 
   boot_disk {
-      initialize_params {
-        image = var.image
-      }
+    initialize_params {
+      image = var.image
+    }
   }
 
   network_interface {
-    network = google_compute_network.vpc_network.name
+    network = var.vpc_network_name
     access_config {}
   }
 }

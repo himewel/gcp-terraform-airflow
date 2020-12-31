@@ -25,8 +25,8 @@ flower = {
 How to run:
 
 ```bash
-terraform init app
-terraform apply app
+terraform init apache-airflow
+terraform apply apache-airflow
 ```
 
 So, wait some moments and check the ip address outputed with the name `proxy_external_ip` in the browser. The Airflow Webserver UI can be found at the root of the addres outputed and Flower can be acessed at the location `/flower`. The terrform output should look like this:

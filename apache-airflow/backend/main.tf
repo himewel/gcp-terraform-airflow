@@ -1,7 +1,7 @@
-resource "google_compute_instance" "scheduler_instance" {
-  name         = "scheduler-instance"
-  machine_type = var.machine.small
-  zone = var.zone.default
+resource "google_compute_instance" "backend_instance" {
+  name                      = "backend-instance"
+  machine_type              = var.machine.small
+  zone                      = var.zone.default
   allow_stopping_for_update = true
 
   metadata = {
@@ -54,18 +54,18 @@ resource "google_compute_instance" "scheduler_instance" {
   }
 
   boot_disk {
-      initialize_params {
-        image = var.image
-      }
+    initialize_params {
+      image = var.image
+    }
   }
 
   network_interface {
-    network = google_compute_network.vpc_network.name
+    network = var.vpc_network_name
     access_config {}
   }
 }
 
-resource "time_sleep" "scheduler_instance_sleep" {
+resource "time_sleep" "backend_instance_sleep" {
   create_duration = "60s"
-  depends_on = [google_compute_instance.scheduler_instance]
+  depends_on      = [google_compute_instance.backend_instance]
 }
