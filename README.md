@@ -1,5 +1,10 @@
 # Terraform build of Airflow in GCP Compute Engine
 
+<code><img height="20" src="https://cdn.iconscout.com/icon/free/png-512/docker-226091.png"> Docker</code> +
+<code><img height="20" src="https://avatars2.githubusercontent.com/u/33643075?s=280&v=4"> Airflow</code> +
+<code><img height="20" src="https://docs.celeryproject.org/en/master/_static/celery_512.png"> Celery</code> +
+<code><img height="20" src="https://i.pinimg.com/originals/28/ec/74/28ec7440a57536eebad2931517aa1cce.png"> Terraform</code>
+
 `terraform.tfvars` example:
 
 ```hcl
