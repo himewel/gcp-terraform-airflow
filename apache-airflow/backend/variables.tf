@@ -30,5 +30,5 @@ variable "webserver" {
 }
 
 variable "vpc_network_name" {
-  type    = string
+  type = string
 }

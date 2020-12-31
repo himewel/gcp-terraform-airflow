@@ -37,9 +37,9 @@ variable "webserver" {
 }
 
 variable "vpc_network_name" {
-  type    = string
+  type = string
 }
 
 variable "backend_instance_address" {
-  type    = string
+  type = string
 }

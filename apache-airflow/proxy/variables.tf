@@ -19,9 +19,9 @@ variable "image" {
 }
 
 variable "vpc_network_name" {
-  type    = string
+  type = string
 }
 
 variable "frontend_instance_address" {
-    type = string
+  type = string
 }
