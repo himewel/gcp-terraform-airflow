@@ -73,21 +73,6 @@ variable "internal_firewall_ip_ranges" {
   ]
 }
 
-variable "credentials_filepath" {
-  type        = string
-  description = "Filepath to the credentials json"
-}
-
-variable "project_id" {
-  type        = string
-  description = "Id of the GCP project"
-}
-
-variable "project_zone" {
-  type        = string
-  description = "Default zone to create the instances"
-}
-
 variable "number_of_workers" {
   type    = number
   default = 4
