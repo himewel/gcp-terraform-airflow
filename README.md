@@ -18,13 +18,9 @@ Besides these VM instances, each worker instantiated take a new VM instance runn
 
 # How to use
 
-A example of `terraform.tfvars` is presented in the following code block. The variables about credentials and project ID and zone are necessairly to make the connection with the GCP project. Besides thia values, some data can be setted about login of the UIs, workers quantity, OS image of the VMs and machine types and sizes.
+A example of `terraform.tfvars` is presented in the following code block. The credentials in GCP need to be provided by `gcloud auth login`, you can use `make gcloud`. Besides these values, some data can be setted about login of the UIs, workers quantity, OS image of the VMs and machine types and sizes:
 
 ```hcl
-credentials_filepath = <PATH TO CRDENTIALS JSON>
-project_id = <PROJECT ID>
-project_zone = <GCP ZONE>
-
 number_of_workers = 4
 webserver = {
     username = "admin"
@@ -43,7 +39,16 @@ flower = {
 To build this project, run with terraform the setup of providers and modules and then, apply the infrastructure configured:
 
 ```bash
+# build docker container
+make build
+# start terraform daemon
+make start
+# enter into the shell container
+make shell
+
+# terraform workflow
 terraform init apache-airflow
+terraform plan apache-airflow
 terraform apply apache-airflow
 ```
 
