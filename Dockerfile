@@ -8,4 +8,6 @@ RUN curl -O https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${T
 
 WORKDIR /root
 
+COPY ./terraform.tfvars .
+
 CMD ["tail", "-f", "/dev/null"]
